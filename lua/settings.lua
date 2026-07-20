@@ -2,6 +2,7 @@
 MYVIMDIR = "C:/Users/ccc/AppData/Local/nvim"
 TMPDIR = MYVIMDIR .. '/temp'
 CONFIG = MYVIMDIR .. "/configs"
+SNIPPETS = MYVIMDIR .. "/snippets"
 TERMSIZE = 20
 
 if not vim.fn.isdirectory(TMPDIR) then

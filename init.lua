@@ -5,6 +5,8 @@ require('functions/RunSnippet')
 require('functions/TermAutoInputMode')
 require('functions/WebSearchCmd')
 require('functions/StartFzf')
+-- require('functions/DefineWord')
+-- require('functions/CommentLine')
 
 local python_grp = vim.api.nvim_create_augroup("python_augroup", {clear=true})
 vim.api.nvim_create_autocmd(
@@ -22,6 +24,6 @@ vim.api.nvim_create_autocmd(
     {
         pattern={"c", "cpp"},
         group=c_grp,
-        callback=function() print('c/pp'); require("functions/CStuff") end
+        callback=function() require("functions/CStuff") end
     }
 )

@@ -9,8 +9,13 @@ function open_file()
     if fname == '' then
         return
     end
-    local cmd = vim.fn.input('> ') ..  ' ' .. fname
-    vim.notify(cmd)
+    local cmd = vim.fn.input('> ')
+    if not cmd == '' then
+        cmd = cmd ..  ' ' .. fname
+    else
+        return
+    end
+    -- vim.notify(cmd)
     vim.api.nvim_set_current_win(og_window)
     vim.cmd(cmd)
     vim.api.nvim_win_close(
@@ -22,8 +27,8 @@ end
 
 local max_height = vim.api.nvim_win_get_height(0) -- 0 for current window
 local max_width = vim.api.nvim_win_get_width(0) -- 0 for current window
-local height=math.floor(max_height * 0.75)
-local width=math.floor(max_width * 0.75)
+local height = math.floor(max_height * 0.75)
+local width = math.floor(max_width * 0.75)
 
 local opts = {
     relative ="editor", -- relative to editor is like absolutely positioned
@@ -34,6 +39,7 @@ local opts = {
 }
 
 function startfuzzer()
+    -- TODO(bader): map <esc> to <c-q> or :q!, or a lua function to kill the temp buffer
     local buf = vim.api.nvim_create_buf(
         false, -- listed: we don't want it listed,
         true -- scatch: we don't want it persisting (it is temp)
@@ -48,3 +54,5 @@ function startfuzzer()
 end
 
 vim.keymap.set('n', '<c-p>', '', {callback=startfuzzer, silent=true, noremap=true})
+vim.keymap.set('i', '<c-p>', '', {callback=startfuzzer, silent=true, noremap=true})
+vim.keymap.set('v', '<c-p>', '', {callback=startfuzzer, silent=true, noremap=true})
