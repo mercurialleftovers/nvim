@@ -1,9 +1,11 @@
 -- GLOBALS:
-MYVIMDIR = "C:/Users/ccc/AppData/Local/nvim"
+-- MYVIMDIR = "C:/Users/ccc/AppData/Local/nvim"
+MYVIMDIR = vim.fn.stdpath("config")
 TMPDIR = MYVIMDIR .. '/temp'
 CONFIG = MYVIMDIR .. "/configs"
 SNIPPETS = MYVIMDIR .. "/snippets"
 TERMSIZE = 20
+LSP = true
 
 if not vim.fn.isdirectory(TMPDIR) then
     vim.fn.mkdir(TMPDIR, 'p')
@@ -28,9 +30,13 @@ interpreters["dosbatch"] = FNAME
 interpreters["powershell"] = "powershell " .. FNAME
 interpreters["c"] = "build.bat"
 interpreters["cpp"] = "build.bat"
+interpreters["go"] = "go run " .. FNAME .. ""
 
 if vim.fn.has("gui_running") then
     vim.opt.guifont = { "Lucida Console", ":h11" }
+    -- vim.opt.guifont = { "CodeNewRoman Nerd Font", ":h11" }
+    -- vim.opt.guifont = { "AnonymicePro Nerd Font", ":h12" }
+    -- vim.opt.guifont = { "ComicShannsMono Nerd Font", ":h11" }
 end
 
 local kmp_config = { noremap = true, silent = true }

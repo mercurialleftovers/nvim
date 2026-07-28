@@ -9,13 +9,12 @@ function open_file()
     if fname == '' then
         return
     end
-    local cmd = vim.fn.input('> ')
-    if not cmd == '' then
-        cmd = cmd ..  ' ' .. fname
-    else
+    local cmd = vim.fn.trim(vim.fn.input('> '))
+    if cmd == '' then
         return
     end
-    -- vim.notify(cmd)
+    cmd = cmd ..  ' ' .. fname
+
     vim.api.nvim_set_current_win(og_window)
     vim.cmd(cmd)
     vim.api.nvim_win_close(
@@ -53,6 +52,8 @@ function startfuzzer()
     vim.cmd('startinsert')
 end
 
+---[[
 vim.keymap.set('n', '<c-p>', '', {callback=startfuzzer, silent=true, noremap=true})
 vim.keymap.set('i', '<c-p>', '', {callback=startfuzzer, silent=true, noremap=true})
 vim.keymap.set('v', '<c-p>', '', {callback=startfuzzer, silent=true, noremap=true})
+--]]

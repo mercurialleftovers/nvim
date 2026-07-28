@@ -29,3 +29,8 @@ vim.api.nvim_create_autocmd(
         group=c_autoformat_grp,
     }
 )
+
+if LSP then
+    vim.lsp.enable("clangd")
+    vim.lsp.enable("clangd-format")
+end
