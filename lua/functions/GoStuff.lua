@@ -1,6 +1,3 @@
-
-local cache_dir = vim.fn.expand("~/.ruff_cache")
-
 function RuffFormat(id, event, group, file, match, buff, data)
     if not vim.fn.executable('gofmt') then
         return
@@ -30,3 +27,10 @@ vim.api.nvim_create_autocmd(
         group=go_autoformat_group,
     }
 )
+
+
+
+
+if LSP then
+    vim.lsp.enable("gopls")
+end

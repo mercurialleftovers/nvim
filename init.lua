@@ -5,57 +5,40 @@ require('functions/RunSnippet')
 require('functions/TermAutoInputMode')
 require('functions/WebSearchCmd')
 require('functions/StartFzf')
+require('functions/AutoCmd')
 -- require('functions/DefineWord')
 -- require('functions/CommentLine')
--- plugins
 require('config.lazy')
 
+
 if LSP then
+    print('LSP activated!')
     vim.diagnostic.config({ virtual_text = true })
+    -- vim.lsp.completion.enable(true, "jdtls", 0, {commit_characters = false})
+    -- [[
+    --autotrigger: Set to true to make the completion menu pop up automatically on server-defined trigger characters. Set to false to trigger manually (e.g., via Ctrl + Space or built-in keymaps).
+    -- ]]
+    -- this upcoming section is heavily AI-influenced:
+    -- Tab to go down the menu
+    vim.keymap.set('i', '<Tab>', function()
+      return vim.fn.pumvisible() ~= 0 and '<C-n>' or '<Tab>'
+    end, { expr = true })
+
+    -- Shift+Tab to go up the menu
+    vim.keymap.set('i', '<S-Tab>', function()
+      return vim.fn.pumvisible() ~= 0 and '<C-p>' or '<S-Tab>'
+    end, { expr = true })
+    vim.opt.completeopt = { "menuone", "noselect", "noinsert" }
+    vim.api.nvim_create_autocmd('LspAttach', {
+      callback = function(args)
+        vim.lsp.completion.enable(true, args.data.client_id, args.buf, {
+          autotrigger = true, commit_characters = false
+        })
+  end,
+})
 end
 
 
-local python_grp = vim.api.nvim_create_augroup("python_augroup", {clear=true})
-vim.api.nvim_create_autocmd(
-    {"FileType"},
-    {
-        pattern="python",
-        group=python_grp,
-        callback=function() require("functions/PythonStuff") end
-    }
-)
-
-local c_grp = vim.api.nvim_create_augroup("c_augroup", {clear=true})
-vim.api.nvim_create_autocmd(
-    {"FileType"},
-    {
-        pattern={"c", "cpp"},
-        group=c_grp,
-        callback=function() require("functions/CStuff") end
-    }
-)
-
-
-local go_grp = vim.api.nvim_create_augroup("go_augroup", {clear=true})
-vim.api.nvim_create_autocmd(
-    {"FileType"},
-    {
-        pattern={"go"},
-        group=go_grp,
-        callback=function() require("functions/GoStuff") end
-    }
-)
-
-
-local lua_grp = vim.api.nvim_create_augroup("lua_augroup", {clear=true})
-vim.api.nvim_create_autocmd(
-    {"FileType"},
-    {
-        pattern={"lua"},
-        group=lua_grp,
-        callback=function() require("functions/LuaStuff") end
-    }
-)
 
 function godir()
     vim.cmd("cd " .. MYVIMDIR) 

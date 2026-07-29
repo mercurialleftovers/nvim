@@ -1,10 +1,11 @@
 -- GLOBALS:
 -- MYVIMDIR = "C:/Users/ccc/AppData/Local/nvim"
-MYVIMDIR = vim.fn.stdpath("config")
+MYVIMDIR = string.gsub(vim.fn.stdpath("config"), [[\]], [[/]])
 TMPDIR = MYVIMDIR .. '/temp'
 CONFIG = MYVIMDIR .. "/configs"
 SNIPPETS = MYVIMDIR .. "/snippets"
 TERMSIZE = 20
+
 LSP = true
 
 if not vim.fn.isdirectory(TMPDIR) then
@@ -23,7 +24,8 @@ else
 end
 
 interpreters["python"] = "python -i " .. FNAME
-interpreters["lua"] = "nvim -u " .. FNAME
+-- interpreters["lua"] = "nvim -u " .. FNAME
+interpreters["lua"] = "lua " .. FNAME
 interpreters["javascript"] = "js " .. FNAME
 interpreters["typescript"] = "deno " .. FNAME
 interpreters["dosbatch"] = FNAME
@@ -31,6 +33,7 @@ interpreters["powershell"] = "powershell " .. FNAME
 interpreters["c"] = "build.bat"
 interpreters["cpp"] = "build.bat"
 interpreters["go"] = "go run " .. FNAME .. ""
+interpreters["java"] = "java " .. FNAME
 
 if vim.fn.has("gui_running") then
     vim.opt.guifont = { "Lucida Console", ":h11" }

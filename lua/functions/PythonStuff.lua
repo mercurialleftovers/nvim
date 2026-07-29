@@ -36,6 +36,8 @@ vim.api.nvim_create_autocmd(
 --local lsp_binary = "python"
 
 if LSP then
+
+    print('pyright LSP activated!')
     -- ref: https://www.reddit.com/r/neovim/comments/1jnaas9/vimlspconfigs_server_and_client_capabilities/
     -- LSP Configuration: Python
     -- Referenced from: https://github.com/neovim/nvim-lspconfig/blob/master/lua/lspconfig/configs/pyright.lua
