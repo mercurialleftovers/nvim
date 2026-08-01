@@ -6,8 +6,6 @@ CONFIG = MYVIMDIR .. "/configs"
 SNIPPETS = MYVIMDIR .. "/snippets"
 TERMSIZE = 20
 
-LSP = true
-
 if not vim.fn.isdirectory(TMPDIR) then
     vim.fn.mkdir(TMPDIR, 'p')
 end
@@ -24,7 +22,6 @@ else
 end
 
 interpreters["python"] = "python -i " .. FNAME
--- interpreters["lua"] = "nvim -u " .. FNAME
 interpreters["lua"] = "lua " .. FNAME
 interpreters["javascript"] = "js " .. FNAME
 interpreters["typescript"] = "deno " .. FNAME
@@ -37,9 +34,6 @@ interpreters["java"] = "java " .. FNAME
 
 if vim.fn.has("gui_running") then
     vim.opt.guifont = { "Lucida Console", ":h11" }
-    -- vim.opt.guifont = { "CodeNewRoman Nerd Font", ":h11" }
-    -- vim.opt.guifont = { "AnonymicePro Nerd Font", ":h12" }
-    -- vim.opt.guifont = { "ComicShannsMono Nerd Font", ":h11" }
 end
 
 local kmp_config = { noremap = true, silent = true }
@@ -72,7 +66,7 @@ vim.opt.backup = false
 vim.opt.undodir = "C:/Users/ccc/AppData/nvim_data"
 vim.opt.undofile = true
 vim.opt.clipboard = "unnamed"
-vim.opt.scrolloff = 10
+vim.opt.scrolloff = 20
 vim.opt.signcolumn = "yes:1"
 
 vim.opt.hlsearch = true

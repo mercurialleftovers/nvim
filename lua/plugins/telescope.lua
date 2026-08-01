@@ -18,6 +18,11 @@ return {
                 silent = true,
             })
 
+            vim.keymap.set('n', '<leader>fb', require("telescope.builtin").current_buffer_fuzzy_find, {
+                noremap = true,
+                silent = true,
+            })
+
            vim.keymap.set('n', '<leader>en',
                function()
                    require("telescope.builtin").find_files {cwd = vim.fn.stdpath('config')}

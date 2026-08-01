@@ -1,36 +1,33 @@
-function RuffFormat(id, event, group, file, match, buff, data)
-    if not vim.fn.executable('gofmt') then
-        return
+local M = {}
+
+M.setup = function(LSP, grp)
+    function RuffFormat(id, event, group, file, match, buff, data)
+        if not vim.fn.executable('gofmt') then
+            return
+        end
+
+        local filename = vim.fn.expand('%:p')
+        local ruff_cmd = "gofmt -w " .. filename
+
+        vim.fn.system(ruff_cmd)
+        vim.fn.execute(":e!")
     end
 
-    local filename = vim.fn.expand('%:p')
-    local ruff_cmd = "gofmt -w " .. filename
+    vim.api.nvim_create_autocmd(
+        {
+            "BufWritePost",
+        },
+        {
+            pattern={'*.go'},
+            callback=RuffFormat,
+            group=grp,
+        }
+    )
 
-    vim.fn.system(ruff_cmd)
-    vim.fn.execute(":e!")
+    if LSP then
+        vim.lsp.enable("gopls")
+    end
+
 end
 
-local go_autoformat_group = vim.api.nvim_create_augroup(
-    "python_format_on_save", 
-    {
-        clear=true
-    }
-)
-
-vim.api.nvim_create_autocmd(
-    {
-        "BufWritePost",
-    },
-    {
-        pattern={'*.go'},
-        callback=RuffFormat,
-        group=go_autoformat_group,
-    }
-)
-
-
-
-
-if LSP then
-    vim.lsp.enable("gopls")
-end
+return M
