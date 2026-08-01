@@ -33,8 +33,13 @@ vim.api.nvim_create_autocmd(
         pattern="python",
         group=python_grp,
         callback=function()
+            print("adding the autocmd: PythonStuff")
             local M = require("functions/PythonStuff")
+            if M.done then
+                return
+            end
             M.setup(LSP, python_grp)
+            M.done = true
         end
     }
 )
@@ -47,7 +52,11 @@ vim.api.nvim_create_autocmd(
         group=c_grp,
         callback=function()
             local M = require("functions/CStuff")
+            if M.done then
+                return
+            end
             M.setup(LSP, c_grp)
+            M.done = true
         end
     }
 )
@@ -61,7 +70,11 @@ vim.api.nvim_create_autocmd(
         group=go_grp,
         callback=function()
             local M = require("functions/GoStuff")
+            if M.done then
+                return
+            end
             M.setup(LSP, go_grp)
+            M.done = true
         end
     }
 )
@@ -75,20 +88,14 @@ vim.api.nvim_create_autocmd(
         group=lua_grp,
         callback=function()
             local M = require("functions/LuaStuff")
+            if M.done then
+                return
+            end
             M.setup(LSP, lua_grp)
+            M.done = true
         end
     }
 )
-
--- local go_grp = vim.api.nvim_create_augroup("go_augroup", {clear=true})
--- vim.api.nvim_create_autocmd(
---     {"FileType"},
---     {
---         pattern={"go"},
---         group=go_grp,
---         callback=function() require("functions/GoStuff") end
---     }
--- )
 
 local java_grp = vim.api.nvim_create_augroup("java_augroup", {clear=true})
 vim.api.nvim_create_autocmd(
@@ -98,7 +105,11 @@ vim.api.nvim_create_autocmd(
         group=java_grp,
         callback=function()
             local M = require("functions/JavaStuff")
+            if M.done then
+                return
+            end
             M.setup(LSP, java_grp)
+            M.done = true
         end
     }
 )
@@ -112,7 +123,11 @@ vim.api.nvim_create_autocmd(
         group=md_grp,
         callback=function()
             local M = require("functions/MdStuff")
+            if M.done then
+                return
+            end
             M.setup(LSP, md_grp)
+            M.done = true
         end
     }
 )

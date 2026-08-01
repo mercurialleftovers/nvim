@@ -32,7 +32,6 @@ M.setup = function(LSP, grp)
         -- vim.lsp.enable('ruff')
         vim.lsp.enable('pyright')
     end
-
 end
 
 return M
