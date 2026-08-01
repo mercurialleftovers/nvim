@@ -26,108 +26,25 @@ if LSP then
 })
 end
 
-local python_grp = vim.api.nvim_create_augroup("python_augroup", {clear=true})
-vim.api.nvim_create_autocmd(
-    {"FileType"},
-    {
-        pattern="python",
-        group=python_grp,
-        callback=function()
-            print("adding the autocmd: PythonStuff")
-            local M = require("functions/PythonStuff")
-            if M.done then
-                return
+
+local mappings = {PythonStuff="python", CStuff={"c", "cpp"}, LuaStuff="lua", GoStuff="go", MdStuff="md", JavaStuff="java"}
+
+for filename, pattern in pairs(mappings) do
+    local _grp = vim.api.nvim_create_augroup(filename, {clear=true})
+
+    vim.api.nvim_create_autocmd(
+        {"FileType"},
+        {
+            pattern=pattern,
+            group=_grp,
+            callback=function()
+                local M = require("functions/" .. filename)
+                if M.done then
+                    return
+                end
+                M.setup(LSP, _grp)
+                M.done = true
             end
-            M.setup(LSP, python_grp)
-            M.done = true
-        end
-    }
-)
-
-local c_grp = vim.api.nvim_create_augroup("c_augroup", {clear=true})
-vim.api.nvim_create_autocmd(
-    {"FileType"},
-    {
-        pattern={"c", "cpp"},
-        group=c_grp,
-        callback=function()
-            local M = require("functions/CStuff")
-            if M.done then
-                return
-            end
-            M.setup(LSP, c_grp)
-            M.done = true
-        end
-    }
-)
-
-
-local go_grp = vim.api.nvim_create_augroup("go_augroup", {clear=true})
-vim.api.nvim_create_autocmd(
-    {"FileType"},
-    {
-        pattern={"go"},
-        group=go_grp,
-        callback=function()
-            local M = require("functions/GoStuff")
-            if M.done then
-                return
-            end
-            M.setup(LSP, go_grp)
-            M.done = true
-        end
-    }
-)
-
-
-local lua_grp = vim.api.nvim_create_augroup("lua_augroup", {clear=true})
-vim.api.nvim_create_autocmd(
-    {"FileType"},
-    {
-        pattern={"lua"},
-        group=lua_grp,
-        callback=function()
-            local M = require("functions/LuaStuff")
-            if M.done then
-                return
-            end
-            M.setup(LSP, lua_grp)
-            M.done = true
-        end
-    }
-)
-
-local java_grp = vim.api.nvim_create_augroup("java_augroup", {clear=true})
-vim.api.nvim_create_autocmd(
-    {"FileType"},
-    {
-        pattern={"java"},
-        group=java_grp,
-        callback=function()
-            local M = require("functions/JavaStuff")
-            if M.done then
-                return
-            end
-            M.setup(LSP, java_grp)
-            M.done = true
-        end
-    }
-)
-
-
-local md_grp = vim.api.nvim_create_augroup("md_augroup", {clear=true})
-vim.api.nvim_create_autocmd(
-    {"FileType"},
-    {
-        pattern={"markdown"},
-        group=md_grp,
-        callback=function()
-            local M = require("functions/MdStuff")
-            if M.done then
-                return
-            end
-            M.setup(LSP, md_grp)
-            M.done = true
-        end
-    }
-)
+        }
+    )
+end
