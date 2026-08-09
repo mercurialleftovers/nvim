@@ -1,5 +1,6 @@
 require("functions/RunFile")
 
+local DEPTH = -3
 local WINDOWS = vim.env.OS == "Windows_NT"
 local build_file
 
@@ -10,7 +11,7 @@ else
 end
 
 function findExec()
-    local found = vim.fn.findfile(build_file, ".;", -3)
+    local found = vim.fn.findfile(build_file, ".;", DEPTH)
 
     if #found > 0 then
         return found[1]
@@ -26,9 +27,9 @@ function execBat()
     if fname then
         -- buffer-local chdir(dirname)
         --
-        vim.cmd(":tabnew")
-        vim.cmd(":tcd " .. dirname)
-        vim.cmd(":hor term " .. fname)
+        vim.cmd(":tabnew | tcd " .. dirname .. " | terminal" .. " fname")
+        -- vim.cmd(":tcd " .. dirname)
+        -- vim.cmd(":hor term " .. fname)
     else
         print("RunFile ...")
         RunFile()
