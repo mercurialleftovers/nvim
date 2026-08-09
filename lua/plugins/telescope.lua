@@ -18,7 +18,7 @@ return {
                 silent = true,
             })
 
-            vim.keymap.set('n', '<leader>fb', require("telescope.builtin").current_buffer_fuzzy_find, {
+            vim.keymap.set('n', '<leader>fc', require("telescope.builtin").current_buffer_fuzzy_find, {
                 noremap = true,
                 silent = true,
             })
@@ -32,6 +32,10 @@ return {
                     silent = true,
                 }
             )
+
+
+            vim.keymap.set("n", "<leader>fh", require("telescope.builtin").help_tags, {noremap=true, silent=true})
         end
     },
 }
+

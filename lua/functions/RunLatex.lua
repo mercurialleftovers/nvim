@@ -39,4 +39,5 @@ if vim.fn.executable("tex") then
             group=latex_group,
         }
     )
+
 end

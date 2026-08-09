@@ -1,3 +1,5 @@
+require("functions/FindAndRunRecursively")
+
 local M = {}
 M.setup = function(LSP, grp)
     function JavaFormat(id, event, group, file, match, buff, data)
@@ -27,6 +29,13 @@ M.setup = function(LSP, grp)
     if LSP then
         vim.lsp.enable("jdtls")
     end
+
 end
 
 return M
+
+
+
+-- todo:
+-- - [ ] recursiveley backing down to find the closes build.bat
+-- - [ ] only affect the buffer that is going to run the built.bat
