@@ -25,18 +25,11 @@ function execBat()
     local dirname = vim.fn.fnamemodify(fname, ":h")
 
     if fname then
-        -- buffer-local chdir(dirname)
-        --
-        vim.cmd(":tabnew | tcd " .. dirname .. " | terminal" .. " fname")
-        -- vim.cmd(":tcd " .. dirname)
-        -- vim.cmd(":hor term " .. fname)
+        vim.cmd(":tabnew | tcd " .. dirname .. " | terminal " .. fname)
     else
-        print("RunFile ...")
         RunFile()
     end
 
 end
 
-
--- vim.keymap.set("n", "<f5>", execBat, {noremap=true, silent=true})
 vim.keymap.set("n", "<f5>", execBat, {noremap=true})
