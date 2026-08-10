@@ -24,6 +24,7 @@ function RunFile()
     -- vim.api.nvim_switch_to_win(termWindowOpen)
     
     vim.fn.execute(":hor term " .. cmd)
+    vim.cmd("resize " .. TERMSIZE)
 end
 
 

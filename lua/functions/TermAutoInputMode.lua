@@ -10,7 +10,7 @@ vim.api.nvim_create_autocmd(
     {
         pattern={"*"},
         callback=function()
-            print('> open'); vim.cmd("resize " .. TERMSIZE)
+            -- vim.cmd("resize " .. TERMSIZE)
             vim.cmd('startinsert')
         end,
         group=auto_input_grp,

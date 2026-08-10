@@ -1,7 +1,7 @@
 require('keymaps')
 require('settings')
 -- require('functions/RunFile')
-require('functions/RunFile')
+require('functions/FindAndRunRecursively')
 require('functions/RunSnippet')
 require('functions/TermAutoInputMode')
 require('functions/WebSearchCmd')
