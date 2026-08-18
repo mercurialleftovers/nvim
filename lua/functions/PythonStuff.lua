@@ -32,6 +32,13 @@ M.setup = function(LSP, grp)
         -- vim.lsp.enable('ruff')
         vim.lsp.enable('pyright')
     end
+
+
+
+    vim.keymap.set("n", "<f7>", function()
+        vim.cmd("hor term ipython")
+        -- vim.cmd("resize -10")
+    end)
 end
 
 return M

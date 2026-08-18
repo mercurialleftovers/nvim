@@ -28,13 +28,13 @@ function RunFile()
 end
 
 
--- vim.keymap.set(
---     'n',
---     '<f5>',
---     '',
---     {
---         noremap=true,
---         callback=RunFile,
---         silent=true
---     }
--- )
+vim.keymap.set(
+    'n',
+    '<f5>',
+    '',
+    {
+        noremap=true,
+        callback=RunFile,
+        silent=true
+    }
+)

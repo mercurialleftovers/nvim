@@ -32,4 +32,4 @@ function execBat()
 
 end
 
-vim.keymap.set("n", "<f5>", execBat, {noremap=true})
+vim.keymap.set("n", "<s-f5>", execBat, {noremap=true})

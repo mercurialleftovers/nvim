@@ -1,6 +1,6 @@
 require('keymaps')
 require('settings')
--- require('functions/RunFile')
+require('functions/RunFile')
 require('functions/FindAndRunRecursively')
 require('functions/RunSnippet')
 require('functions/TermAutoInputMode')
@@ -24,3 +24,6 @@ end
 -- todo:
 -- - [ ] make the runFile function aware of the terminal it spawns, so that if you re-f5, it uses the same terminal buffer
 -- - [ ] make formatters and runFile asynchronous
+--
+
+

@@ -30,6 +30,12 @@ M.setup = function(LSP, grp)
         vim.lsp.enable("jdtls")
     end
 
+    vim.opt_local.tabstop = 2      -- Number of spaces that a <Tab> in the file counts for
+    vim.opt_local.shiftwidth = 2   -- Number of spaces to use for each step of (auto)indent
+    vim.opt_local.softtabstop = 2  -- Number of spaces that a <Tab> counts for while performing editing operations
+    vim.opt_local.number = false
+    vim.opt_local.relativenumber = false
+
 end
 
 return M

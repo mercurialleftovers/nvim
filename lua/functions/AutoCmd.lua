@@ -1,6 +1,7 @@
 LSP = true
 
 if LSP then
+    vim.o.autocomplete = true
     vim.diagnostic.config({ virtual_text = true })
     -- vim.lsp.completion.enable(true, "jdtls", 0, {commit_characters = false})
     -- [[
@@ -27,7 +28,7 @@ if LSP then
 end
 
 
-local mappings = {PythonStuff="python", CStuff={"c", "cpp"}, LuaStuff="lua", GoStuff="go", MdStuff="md", JavaStuff="java"}
+local mappings = {PythonStuff="python", CStuff={"c", "cpp"}, LuaStuff="lua", GoStuff="go", MdStuff="md", JavaStuff="java", HtmlStuff="html"}
 
 for filename, pattern in pairs(mappings) do
     local _grp = vim.api.nvim_create_augroup(filename, {clear=true})
