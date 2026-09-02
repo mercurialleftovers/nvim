@@ -9,6 +9,7 @@ require('functions/StartFzf')
 
 -- language specific settings, loaded lazily (autocmd filetype!)
 require('functions/AutoCmd')
+require('functions/Autocomplete')
 -- require('functions/DefineWord')
 -- require('functions/CommentLine')
 require('config.lazy')

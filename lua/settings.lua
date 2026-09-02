@@ -1,9 +1,9 @@
 -- GLOBALS:
 -- MYVIMDIR = "C:/Users/ccc/AppData/Local/nvim"
 MYVIMDIR = string.gsub(vim.fn.stdpath("config"), [[\]], [[/]])
-TMPDIR = MYVIMDIR .. '/temp'
-CONFIG = MYVIMDIR .. "/configs"
-SNIPPETS = MYVIMDIR .. "/snippets"
+TMPDIR = vim.fs.joinpath(MYVIMDIR, '/temp')
+CONFIG = vim.fs.joinpath(MYVIMDIR, "/configs")
+SNIPPETS = vim.fs.joinpath(MYVIMDIR, "/snippets")
 TERMSIZE = 20
 
 if not vim.fn.isdirectory(TMPDIR) then
@@ -15,11 +15,11 @@ FNAME = "filenameholder"
 
 interpreters = {}
 
-if vim.fn.executable('ipython') then
-    interpreters["python"] = "ipython -i " .. FNAME
-else
-    interpreters["python"] = "python -i " .. FNAME
-end
+-- if vim.fn.executable('ipython') then
+--     interpreters["python"] = "ipython -i " .. FNAME
+-- else
+--     interpreters["python"] = "python -i " .. FNAME
+-- end
 
 interpreters["python"] = "python -i " .. FNAME
 interpreters["lua"] = "lua " .. FNAME
@@ -36,43 +36,45 @@ if vim.fn.has("gui_running") then
     vim.opt.guifont = { "Lucida Console", ":h11" }
 end
 
-local kmp_config = { noremap = true, silent = true }
 
 vim.cmd.colorscheme('slate')
 
-vim.opt.autoread = true
-vim.opt.tabstop = 4
-vim.opt.softtabstop = 4
-vim.opt.shiftwidth = 4
-vim.opt.expandtab = true
-vim.opt.autoindent = true
-vim.opt.smartindent = true
-vim.opt.smarttab = true -- help smarttab
-vim.opt.listchars = "eol:;,tab:>-,trail:-,extends:>,precedes:<"
--- vim.opt.list = true
-vim.opt.number = true
-vim.opt.relativenumber = true
-vim.opt.showcmd = false
-vim.opt.showmode = false
-vim.opt.cursorline = true
-vim.opt.splitbelow = true
-vim.opt.splitright = true
-vim.opt.wrap = false
+vim.o.autoread = true
+vim.o.tabstop = 4
+vim.o.softtabstop = 4
+vim.o.shiftwidth = 4
+vim.o.expandtab = true
+vim.o.autoindent = true
+vim.o.smartindent = true
+vim.o.smarttab = true -- help smarttab
+vim.o.listchars = "eol:;,tab:>-,trail:-,extends:>,precedes:<"
+-- vim.o.list = true
+vim.o.number = true
+vim.o.relativenumber = true
+vim.o.showcmd = false
+vim.o.showmode = false
+vim.o.cursorline = true
+vim.o.splitbelow = true
+vim.o.splitright = true
+vim.o.wrap = false
 
-vim.opt.swapfile = false
-vim.opt.backup = false
+vim.o.swapfile = false
+vim.o.backup = false
 
--- vim.opt.undodir = "C:\\Users\\ccc\\AppData\\nvim_data\\"
-vim.opt.undodir = "C:/Users/ccc/AppData/nvim_data"
-vim.opt.undofile = true
-vim.opt.clipboard = "unnamed"
-vim.opt.scrolloff = 20
-vim.opt.signcolumn = "yes:1"
+vim.o.undodir = vim.fs.joinpath(TMPDIR, "undodir")
+if vim.fn.isdirectory(vim.o.undodir) == 0 then
+    vim.fn.mkdir(vim.o.undodir)
+end
 
-vim.opt.hlsearch = true
-vim.opt.incsearch = true
+vim.o.undofile = true
+vim.o.clipboard = "unnamed"
+vim.o.scrolloff = 20
+vim.o.signcolumn = "yes:1"
 
--- vim.opt.ignorecase = true
-vim.opt.smartcase =true
+vim.o.hlsearch = true
+vim.o.incsearch = true
 
-vim.opt.termguicolors = true
+-- vim.o.ignorecase = true
+vim.o.smartcase =true
+
+vim.o.termguicolors = true
