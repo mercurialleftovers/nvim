@@ -10,7 +10,8 @@ require('functions/StartFzf')
 -- language specific settings, loaded lazily (autocmd filetype!)
 require('functions/AutoCmd')
 require('functions/Autocomplete')
--- require('functions/DefineWord')
+--
+-- require('functions/DefineWord') -- TODO(bader): find a more suitable snippet management system, or complete this one
 -- require('functions/CommentLine')
 require('config.lazy')
 
@@ -18,13 +19,10 @@ require('config.lazy')
 
 
 function godir()
-    vim.cmd("cd " .. MYVIMDIR) 
+    vim.cmd("cd " .. MYVIMDIR)
 end
-
 
 -- todo:
 -- - [ ] make the runFile function aware of the terminal it spawns, so that if you re-f5, it uses the same terminal buffer
 -- - [ ] make formatters and runFile asynchronous
 --
-
-

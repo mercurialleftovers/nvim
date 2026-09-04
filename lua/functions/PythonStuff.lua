@@ -4,7 +4,7 @@ M.setup = function(LSP, grp)
     -- local cache_dir = vim.fn.expand("~/.ruff_cache")
     local cache_dir = vim.fn.expand(TMPDIR .. "/.ruff_cache")
 
-    function RuffFormat(id, event, group, file, match, buff, data)
+    function RuffFormatLegacy(id, event, group, file, match, buff, data)
         if not vim.fn.executable('ruff') then
             return
         end
@@ -19,11 +19,13 @@ M.setup = function(LSP, grp)
 
     vim.api.nvim_create_autocmd(
         {
-            "BufWritePost",
+            -- "BufWritePost",
+            "BufWritePre", -- after switching to LSP-based formatting
         },
         {
             pattern={'*.py'},
-            callback=RuffFormat,
+            -- callback=RuffFormatLegacy,
+            callback = function(args) vim.lsp.buf.format({bufnr=args.buf}) end,
             group=grp,
         }
     )
