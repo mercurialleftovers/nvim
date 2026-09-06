@@ -16,30 +16,23 @@ M.setup = function(LSP, grp)
         vim.fn.execute(":e!")
     end
 
-
+    --[[
     vim.api.nvim_create_autocmd(
         {
             -- "BufWritePost",
             "BufWritePre", -- after switching to LSP-based formatting
         },
         {
-            pattern={'*.py'},
+            pattern = { '*.py' },
             -- callback=RuffFormatLegacy,
-            callback = function(args) vim.lsp.buf.format({bufnr=args.buf}) end,
-            group=grp,
+            callback = function(args) vim.lsp.buf.format({ bufnr = args.buf }) end,
+            group = grp,
         }
     )
-
-    if LSP then
-        -- vim.lsp.enable('ruff')
-        vim.lsp.enable('pyright')
-    end
-
-
-
+    --]]
+    --
     vim.keymap.set("n", "<f7>", function()
         vim.cmd("hor term ipython")
-        -- vim.cmd("resize -10")
     end)
 end
 

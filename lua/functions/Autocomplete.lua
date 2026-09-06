@@ -1,6 +1,6 @@
 vim.opt.autocomplete = true
-vim.opt.complete = {"i", ".", "b", "w", "kspell"}
-vim.opt.completeopt = {"menu", "menuone", "noinsert", "noselect", "fuzzy"}
+vim.opt.complete = { "i", ".", "b", "w", "kspell" }
+vim.opt.completeopt = { "menu", "menuone", "noinsert", "noselect", "fuzzy" }
 
 
 vim.keymap.set(
@@ -13,7 +13,7 @@ vim.keymap.set(
             return "<Tab>"
         end
     end,
-    {expr = true, silent=true}
+    { expr = true, silent = true }
 )
 
 vim.keymap.set(
@@ -26,18 +26,18 @@ vim.keymap.set(
             return "<S-Tab>"
         end
     end,
-    {expr = true, silent=true}
+    { expr = true, silent = true }
 )
 
 
 -- c-space to trigger omnifunc
-vim.keymap.set("i", "<C-space>", "<C-x><C-o>", {silent=true})
+vim.keymap.set("i", "<C-space>", "<C-x><C-o>", { silent = true })
 --
 vim.api.nvim_create_autocmd("LspAttach", {
     group = vim.api.nvim_create_augroup("LspAttachGroup", {}),
     callback = function(ev)
         -- vim.bo[ev.buf].omnifunc = "v:lua.vim.lsp.omnifunc"
-        local opts = {buffer = ev.buf}
+        local opts = { buffer = ev.buf }
 
         vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
         vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
@@ -49,6 +49,25 @@ vim.api.nvim_create_autocmd("LspAttach", {
         vim.keymap.set("n", "<leader>D", vim.diagnostic.open_float, opts)
         vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
         vim.keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
-
     end
 })
+
+
+-- enabling format on save
+vim.api.nvim_create_autocmd(
+    {
+        -- "BufWritePost",
+        "BufWritePre", -- after switching to LSP-based formatting
+    },
+    {
+        pattern = { '*' },
+        -- callback=RuffFormatLegacy,
+        callback = function(args)
+            local lsp_activated = #vim.lsp.get_clients({ bufnr = 0 }) > 0 -- bufnr = 0 means current buffer
+            if lsp_activated then
+                vim.lsp.buf.format({ bufnr = args.buf })
+            end
+        end,
+        group = vim.api.nvim_create_augroup("FormatOnSave", {}),
+    }
+)
