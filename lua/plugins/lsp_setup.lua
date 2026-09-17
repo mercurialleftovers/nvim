@@ -27,10 +27,11 @@ return {
             require("mason-lspconfig").setup({
                 ensure_installed = {
                     "pyright",
-                    "ruff",
-                    "clangd",
+                    -- "ruff",
+                    -- "clangd",
                     "lua_ls",
-                    "emmet_ls",
+                    "ts_ls",
+                    -- "emmet_ls",
                 },
             })
 
@@ -53,22 +54,22 @@ return {
             }
             vim.lsp.config("ruff", ruff_config) -- the root markers will autotriger ruff, so don't config unless you plan on using it
             -- emmet_ls:
-            local capabilities = vim.lsp.protocol.make_client_capabilities()
-            capabilities.textDocument.completion.completionItem.snippetSupport = true
-
-            vim.lsp.config("emmet_ls", {
-                -- on_attach = on_attach,
-                capabilities = capabilities,
-                filetypes = { "css", "eruby", "html", "javascript", "javascriptreact", "less", "sass", "scss", "svelte", "pug", "typescriptreact", "vue" },
-                init_options = {
-                    html = {
-                        options = {
-                            -- For possible options, see: https://github.com/emmetio/emmet/blob/master/src/config.ts#L79-L267
-                            ["bem.enabled"] = true,
-                        },
-                    },
-                }
-            })
+            -- local capabilities = vim.lsp.protocol.make_client_capabilities()
+            -- capabilities.textDocument.completion.completionItem.snippetSupport = true
+            --
+            -- vim.lsp.config("emmet_ls", {
+            --     -- on_attach = on_attach,
+            --     capabilities = capabilities,
+            --     filetypes = { "css", "eruby", "html", "javascript", "javascriptreact", "less", "sass", "scss", "svelte", "pug", "typescriptreact", "vue" },
+            --     init_options = {
+            --         html = {
+            --             options = {
+            --                 -- For possible options, see: https://github.com/emmetio/emmet/blob/master/src/config.ts#L79-L267
+            --                 ["bem.enabled"] = true,
+            --             },
+            --         },
+            --     }
+            -- })
         end,
     },
 }

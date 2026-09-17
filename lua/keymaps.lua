@@ -35,7 +35,7 @@ vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv", kmp_config)
 
 -- launching terminal
 local tlaunch_kmp = "<c-enter>"
-local tnormal_mode= "<c-\\><c-N>"
+local tnormal_mode = "<c-\\><c-N>"
 
 if vim.fn.has("gui_running") == 0 then
     -- TODO(bader): fix this
@@ -133,3 +133,26 @@ vim.keymap.set("t", "<c-q>", tnormal_mode .. ":q!<CR>", kmp_config)
 vim.keymap.set("n", "<tab>", "za", kmp_config)
 vim.keymap.set("v", "<tab>", ">gv", kmp_config)
 vim.keymap.set("v", "<s-tab>", "<gv", kmp_config)
+
+
+
+-- increase/decrease font
+--
+function change_font_size(num)
+    local current_font = vim.o.guifont
+    local pattern = "\\d\\+"
+    local current_font_size = tonumber(vim.fn.matchstr(current_font, pattern))
+    vim.o.guifont = vim.fn.substitute(current_font, pattern, current_font_size + num, '')
+    print(vim.o.guifont)
+end
+
+vim.keymap.set({ "n", "i", "t" }, "<C-=>", function() change_font_size(1) end, {})
+vim.keymap.set({ "v" }, "<C-=>", function()
+    change_font_size(1); return "gv"
+end, { expr = true })
+
+vim.keymap.set({ "n", "i", "t" }, "<C-->", function() change_font_size(-1) end, {})
+vim.keymap.set({ "v" }, "<C-->", function()
+    change_font_size(-1)
+    return "gv"
+end, { expr = true })

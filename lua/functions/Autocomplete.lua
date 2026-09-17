@@ -8,7 +8,7 @@ vim.keymap.set(
     "<Tab>",
     function()
         if vim.fn.pumvisible() == 1 then
-            return "<c-n>"
+            return "<C-n>"
         else
             return "<Tab>"
         end
@@ -21,9 +21,23 @@ vim.keymap.set(
     "<S-Tab>",
     function()
         if vim.fn.pumvisible() == 1 then
-            return "<c-p>"
+            return "<C-p>"
         else
             return "<S-Tab>"
+        end
+    end,
+    { expr = true, silent = true }
+)
+
+
+vim.keymap.set(
+    "i",
+    "<Esc>",
+    function()
+        if vim.fn.pumvisible() == 1 then
+            return "<C-e>"
+        else
+            return "<Esc>"
         end
     end,
     { expr = true, silent = true }
@@ -49,6 +63,8 @@ vim.api.nvim_create_autocmd("LspAttach", {
         vim.keymap.set("n", "<leader>D", vim.diagnostic.open_float, opts)
         vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
         vim.keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
+
+        vim.opt_local.complete = 'o'
     end
 })
 

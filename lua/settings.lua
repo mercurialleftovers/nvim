@@ -23,7 +23,7 @@ interpreters = {}
 
 interpreters["python"] = "python -i " .. FNAME
 interpreters["lua"] = "lua " .. FNAME
-interpreters["javascript"] = "js " .. FNAME
+interpreters["javascript"] = "node " .. FNAME
 interpreters["typescript"] = "deno " .. FNAME
 interpreters["dosbatch"] = FNAME
 interpreters["powershell"] = "powershell " .. FNAME
@@ -75,6 +75,6 @@ vim.o.hlsearch = true
 vim.o.incsearch = true
 
 -- vim.o.ignorecase = true
-vim.o.smartcase =true
+vim.o.smartcase = true
 
 vim.o.termguicolors = true

@@ -57,9 +57,8 @@ return {
                 useLibraryCodeForTypes = true,
                 -- diagnosticMode = 'openFilesOnly',
 
-                -- NOTE(bader): disable linting, delegate it to ruff
-                typeCheckingMode = "off", -- off, usually I use strict on vscode
-                diagnosticMode = 'off',
+                typeCheckingMode = "strict",
+                -- diagnosticMode = 'off',
             },
         },
     },
