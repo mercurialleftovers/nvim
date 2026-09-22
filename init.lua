@@ -2,8 +2,7 @@
 require("config.lazy")
 -- globals
 NMODE_TERM = "<C-\\><C-n>"
-FONTNAME = "Consolas:h13"
-FONTNAME = "Lucida Console:h12"
+FONTNAME = "Iosevka Nerd Font Mono:h11"
 COLORTHEME = "slate"
 INTERPRETERS = {}
 INTERPRETERS["python"] = "python -i fname"
@@ -13,7 +12,7 @@ BUILD_SCRIPT = "build.bat" -- TODO(bader): add Nix support (build.sh)
 if vim.fn.isdirectory(UNDODIR) == 0 then vim.fn.mkdir(UNDODIR, "p") else print(UNDODIR .. " is a dir") end
 -- settings
 vim.cmd("colorscheme " .. COLORTHEME)
-vim.o.guifont = FONTNAME
+vim.opt.guifont = { FONTNAME }
 vim.o.showmode = false
 vim.o.wrap = false
 vim.opt.scrolloff = 20
@@ -120,10 +119,13 @@ function ChangeFontSize(size)
 	vim.o.guifont = vim.fn.substitute(vim.o.guifont, nbr_pattern, current_size + size, "")
 end
 
-vim.keymap.set({ "i", "n", "v" }, "<C-=>", function() ChangeFontSize(1) end, { silent = true, noremap = true })
-vim.keymap.set({ "i", "n", "v" }, "<C-->", function() ChangeFontSize(-1) end, { silent = true, noremap = true })
+vim.keymap.set({ "i", "n", "v", "t" }, "<C-=>", function() ChangeFontSize(1) end, { silent = true, noremap = true })
+vim.keymap.set({ "i", "n", "v", "t" }, "<C-->", function() ChangeFontSize(-1) end, { silent = true, noremap = true })
 -- move selection up and down + gq if formatting capability supplied by lsp
 vim.keymap.set("v", "<S-k>", ":m '<-2<CR>gv=gv", { silent = true, noremap = silent })
 vim.keymap.set("v", "<S-j>", ":m '>+1<CR>gv=gv", { silent = true, noremap = silent })
 -- cd into the config dir
 function godir() vim.cmd("tcd " .. vim.fn.stdpath("config")) end
+
+-- ctrl-bs
+vim.keymap.set("i", "<C-BS>", "<Esc>viwxi", { silent = true, noremap = true })

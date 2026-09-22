@@ -55,7 +55,7 @@ return {
 		},
 		config = function()
 			require("mason-lspconfig").setup {
-				ensure_installed = { "lua_ls", "pyright", "ruff" },
+				ensure_installed = { "lua_ls", "pyright", "ruff", "clangd", "tinymist" },
 			}
 
 			-- configuring lsp stuff
