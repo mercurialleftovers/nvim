@@ -42,7 +42,7 @@ vim.keymap.set({ "n", "i" }, "<C-c>", "<Esc>yy", { silent = true, noremap = true
 -- ctrl v
 vim.keymap.set({ "v" }, "<C-v>", "p", { silent = true, noremap = true })
 vim.keymap.set({ "n", "i" }, "<C-v>", "<Esc>p", { silent = true, noremap = true })
--- vim.keymap.set({ "t" }, "<C-v>", NMODE_TERM .. "p", { silent = true, noremap = true })
+vim.keymap.set({ "t" }, "<C-v>", NMODE_TERM .. "pi", { silent = true, noremap = true })
 -- ctrl x
 vim.keymap.set({ "n", "i" }, "<C-x>", "<Esc>dd", { silent = true, noremap = true })
 vim.keymap.set({ "v" }, "<C-x>", "x", { silent = true, noremap = true })
@@ -105,7 +105,7 @@ end
 
 vim.keymap.set({ "n", "v", "i" }, "<S-F5>", RunBuildScript, { silent = true, noremap = true })
 -- <S-Enter>: RunChunk
-function RunChunk(filepath)
+function RunChunk()
 	local filepath = vim.fs.joinpath(TEMPDIR, "temp_file." .. vim.o.filetype)
 	vim.cmd("normal! \"cy")
 	vim.fn.writefile(vim.fn.getreg('c'), filepath)
