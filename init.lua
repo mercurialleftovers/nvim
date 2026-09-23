@@ -17,6 +17,7 @@ vim.o.showmode = false
 vim.o.wrap = false
 vim.opt.scrolloff = 20
 vim.opt.signcolumn = "yes:2"
+vim.opt.statuscolumn = "%s%l |"
 -- completion
 vim.opt.complete = "o,.,b"
 vim.opt.completeopt = "menu,menuone,fuzzy,preview,popup,noselect,noinsert"
@@ -41,6 +42,7 @@ vim.keymap.set({ "n", "i" }, "<C-c>", "<Esc>yy", { silent = true, noremap = true
 -- ctrl v
 vim.keymap.set({ "v" }, "<C-v>", "p", { silent = true, noremap = true })
 vim.keymap.set({ "n", "i" }, "<C-v>", "<Esc>p", { silent = true, noremap = true })
+-- vim.keymap.set({ "t" }, "<C-v>", NMODE_TERM .. "p", { silent = true, noremap = true })
 -- ctrl x
 vim.keymap.set({ "n", "i" }, "<C-x>", "<Esc>dd", { silent = true, noremap = true })
 vim.keymap.set({ "v" }, "<C-x>", "x", { silent = true, noremap = true })

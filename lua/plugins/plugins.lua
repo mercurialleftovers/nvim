@@ -63,9 +63,8 @@ return {
 			vim.api.nvim_create_autocmd("LspAttach", {
 				group = lsp_grp,
 				callback = function(ev)
-					print("LspAttached :")
-					print(vim.inspect(vim.lsp.get_clients({ bufnr = 0 })))
-
+					-- print("LspAttached :")
+					-- print(vim.inspect(vim.lsp.get_clients({ bufnr = 0 })))
 					local opts = { buffer = ev.buf }
 
 					vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
