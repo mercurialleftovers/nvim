@@ -4,6 +4,7 @@ return {
 		version = '*',
 		config = function()
 			require("mini.icons").setup()
+			MiniIcons.mock_nvim_web_devicons()
 		end,
 	},
 	{
@@ -55,7 +56,7 @@ return {
 		},
 		config = function()
 			require("mason-lspconfig").setup {
-				ensure_installed = { "lua_ls", "pyright", "ruff", "clangd", "tinymist" },
+				ensure_installed = { "lua_ls", "pyright", "ruff", "clangd", "tinymist", "emmet_ls", "eslint", "arduino_language_server" },
 			}
 
 			-- configuring lsp stuff

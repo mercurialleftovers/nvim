@@ -9,7 +9,7 @@ INTERPRETERS["python"] = "python -i fname"
 TEMPDIR = vim.fs.joinpath(vim.fn.stdpath("data"), "tempstuff")
 UNDODIR = vim.fs.joinpath(TEMPDIR, "undodir")
 BUILD_SCRIPT = "build.bat" -- TODO(bader): add Nix support (build.sh)
-if vim.fn.isdirectory(UNDODIR) == 0 then vim.fn.mkdir(UNDODIR, "p") else print(UNDODIR .. " is a dir") end
+if vim.fn.isdirectory(UNDODIR) == 0 then vim.fn.mkdir(UNDODIR, "p") end
 -- settings
 vim.cmd("colorscheme " .. COLORTHEME)
 vim.opt.guifont = { FONTNAME }
@@ -65,6 +65,10 @@ vim.keymap.set({ "i", }, "<S-Tab>",
 	function() if vim.fn.pumvisible() == 1 then return "<C-p>" else return "<S-Tab>" end end,
 	{ silent = true, noremap = true, expr = true })
 vim.keymap.set({ "i", }, "<Esc>", function() if vim.fn.pumvisible() == 1 then return "<C-e>" else return "<Esc>" end end,
+	{ silent = true, noremap = true, expr = true })
+-- Enter to select complpetion entry (pumvisible)
+vim.keymap.set({ "i", }, "<Enter>",
+	function() if vim.fn.pumvisible() == 1 then return "<C-y>" else return "<Enter>" end end,
 	{ silent = true, noremap = true, expr = true })
 -- tabs
 vim.keymap.set({ "n", "v", "i", "t" }, "<C-t>", function() vim.cmd(":tabnew") end, { silent = true, noremap = true })
