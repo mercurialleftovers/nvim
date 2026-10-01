@@ -2,7 +2,8 @@
 require("config.lazy")
 -- globals
 NMODE_TERM = "<C-\\><C-n>"
-FONTNAME = "Iosevka Nerd Font Mono:h11"
+-- FONTNAME = "Iosevka Nerd Font Mono:h11"
+FONTNAME = "Lucida Console:h11"
 COLORTHEME = "slate"
 INTERPRETERS = {}
 INTERPRETERS["python"] = "python -i fname"
@@ -17,7 +18,7 @@ vim.o.showmode = false
 vim.o.wrap = false
 vim.opt.scrolloff = 20
 vim.opt.signcolumn = "yes:2"
-vim.opt.statuscolumn = "%s%l |"
+vim.opt.statuscolumn = "%s%l▕ "
 -- completion
 vim.opt.complete = "o,.,b"
 vim.opt.completeopt = "menu,menuone,fuzzy,preview,popup,noselect,noinsert"
