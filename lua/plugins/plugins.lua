@@ -44,6 +44,15 @@ return {
 			vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = 'Telescope live grep' })
 			vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = 'Telescope help tags' })
 			vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = 'Telescope buffers' })
+
+			-- disabling auto-completion
+			vim.api.nvim_create_autocmd({ "BufEnter" }, {
+				pattern = "prompt",
+				-- callback = function() vim.buf.opt.autocompletion = false end
+				callback = function()
+					print("prompt buf detected"); vim.cmd("setlocal noautocomplete")
+				end
+			})
 		end,
 	},
 	-- { "mason-org/mason.nvim", opts = {}, }, -- handled by dependencies
@@ -56,7 +65,7 @@ return {
 		},
 		config = function()
 			require("mason-lspconfig").setup {
-				ensure_installed = { "lua_ls", "pyright", "ruff", "clangd", "tinymist", "emmet_ls", "eslint", "arduino_language_server" },
+				ensure_installed = { "lua_ls", "pyright", "ruff", "clangd", "tinymist", "emmet_ls", "biome", "arduino_language_server", "harper_ls" },
 			}
 
 			-- configuring lsp stuff
@@ -95,6 +104,10 @@ return {
 					group = lsp_grp,
 				}
 			)
+
+			-- harper_ls
+			vim.lsp.config("harper_ls", {
+				filetypes = { "typst, markdown, text, tex, html" } })
 		end
 	},
 	{
@@ -108,4 +121,17 @@ return {
 			},
 		},
 	},
+	{
+		'nvim-treesitter/nvim-treesitter',
+		lazy = false,
+		build = ':TSUpdate',
+		config = function()
+			local treesitter = require("nvim-treesitter")
+			treesitter.setup {
+				-- Directory to install parsers and queries to (prepended to `runtimepath` to have priority)
+				install_dir = vim.fn.stdpath('data') .. '/site'
+			}
+			treesitter.install { "typescript", "javascript", "css", "html" }
+		end
+	}
 }

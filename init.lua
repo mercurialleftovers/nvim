@@ -65,8 +65,9 @@ vim.keymap.set({ "i", }, "<Tab>", function() if vim.fn.pumvisible() == 1 then re
 vim.keymap.set({ "i", }, "<S-Tab>",
 	function() if vim.fn.pumvisible() == 1 then return "<C-p>" else return "<S-Tab>" end end,
 	{ silent = true, noremap = true, expr = true })
-vim.keymap.set({ "i", }, "<Esc>", function() if vim.fn.pumvisible() == 1 then return "<C-e>" else return "<Esc>" end end,
-	{ silent = true, noremap = true, expr = true })
+-- escape closes completion menu
+-- vim.keymap.set({ "i", }, "<Esc>", function() if vim.fn.pumvisible() == 1 then return "<C-e>" else return "<Esc>" end end,
+-- 	{ silent = true, noremap = true, expr = true })
 -- Enter to select complpetion entry (pumvisible)
 vim.keymap.set({ "i", }, "<Enter>",
 	function() if vim.fn.pumvisible() == 1 then return "<C-y>" else return "<Enter>" end end,
@@ -100,15 +101,21 @@ end
 
 vim.keymap.set({ "n", "v", "i" }, "<F5>", RunFile, { silent = true, noremap = true })
 -- <S-F5>: runfile
-function RunBuildScript()
-	local build_file = vim.fn.findfile(BUILD_SCRIPT, ".;", -3)
+function RunBuildScript(build_script)
+	if build_script == nil then
+		build_script = BUILD_SCRIPT
+	end
+
+	local build_file = vim.fn.findfile(build_script, ".;", -3)
 	if #build_file == 0 then return end
 	build_file = build_file[1]
 	local parent_dir = vim.fn.fnamemodify(build_file, ":h:p")
-	vim.cmd("tcd " .. parent_dir .. " | tabnew | term " .. build_file)
+	-- vim.cmd("tcd " .. parent_dir .. " | tabnew | term " .. build_file)
+	vim.cmd("tabnew | " .. "tcd " .. parent_dir .. " | term " .. build_file)
 end
 
 vim.keymap.set({ "n", "v", "i" }, "<S-F5>", RunBuildScript, { silent = true, noremap = true })
+vim.keymap.set({ "n", "v", "i" }, "<S-F6>", function() RunBuildScript("debug.bat") end, { silent = true, noremap = true })
 -- <S-Enter>: RunChunk
 function RunChunk()
 	local filepath = vim.fs.joinpath(TEMPDIR, "temp_file." .. vim.o.filetype)
