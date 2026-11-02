@@ -7,6 +7,9 @@ FONTNAME = "Lucida Console:h11"
 COLORTHEME = "slate"
 INTERPRETERS = {}
 INTERPRETERS["python"] = "python -i fname"
+INTERPRETERS["typst"] = "typst compile fname --open"
+INTERPRETERS["javascript"] = "node fname"
+INTERPRETERS["typescript"] = "node fname"
 TEMPDIR = vim.fs.joinpath(vim.fn.stdpath("data"), "tempstuff")
 UNDODIR = vim.fs.joinpath(TEMPDIR, "undodir")
 BUILD_SCRIPT = "build.bat" -- TODO(bader): add Nix support (build.sh)
@@ -21,7 +24,7 @@ vim.opt.signcolumn = "yes:2"
 vim.opt.statuscolumn = "%s%l▕ "
 -- completion
 vim.opt.complete = "o,.,b"
-vim.opt.completeopt = "menu,menuone,fuzzy,preview,popup,noselect,noinsert"
+vim.opt.completeopt = "menuone,fuzzy,popup,noselect"
 vim.opt.autocomplete = true
 -- splitting
 vim.opt.splitright = true
@@ -31,9 +34,16 @@ vim.opt.clipboard = "unnamedplus"
 -- undodir
 vim.opt.undodir = UNDODIR
 vim.opt.swapfile = false
--- tabs
+-- tabstop and shiftwidth
 vim.opt.tabstop = 4
 vim.opt.shiftwidth = 4
+vim.api.nvim_create_autocmd("BufEnter", {
+	pattern = { "*.html", "*.c", "*.cpp", "*.cc" },
+	callback = function()
+		vim.opt_local.shiftwidth = 2
+		vim.opt_local.tabstop = 2
+	end,
+})
 -- keymaps:
 -- ctrl-s
 vim.keymap.set({ "n", "v", "i" }, "<C-s>", "<Esc>:w<Enter>", { silent = true, noremap = true })
@@ -55,6 +65,10 @@ vim.keymap.set({ "v", "n" }, "<C-e>", "$", { silent = true, noremap = true })
 -- terminals
 vim.keymap.set({ "i", "v", "n", "t" }, "<C-Enter>", function() vim.cmd(":hor term") end,
 	{ silent = true, noremap = true })
+-- terminal, in a terminal nvim (as opposed to a gui - neovide)
+vim.keymap.set({ "i", "v", "n", "t" }, "<F6>", function() vim.cmd(":hor term") end,
+	{ silent = true, noremap = true })
+
 vim.keymap.set({ "t" }, "<Esc>", NMODE_TERM, { silent = true, noremap = true })
 -- ctrl-q
 vim.keymap.set({ "i", "v", "n", }, "<C-q>", "<Esc>:q!<Enter>", { silent = true, noremap = true })
@@ -84,12 +98,18 @@ vim.keymap.set({ "n", "v", "i", "t" }, "<S-a-l>", function() vim.cmd(":tabmove +
 for _, val in pairs({ "h", "j", "k", "l" }) do
 	vim.keymap.set({ "n", "v", "i" }, "<C-" .. val .. ">", "<Esc><C-w>" .. val, { silent = true, noremap = true })
 	vim.keymap.set({ "t" }, "<C-" .. val .. ">", NMODE_TERM .. "<C-w>" .. val, { silent = true, noremap = true })
+	-- moving windows
+	vim.keymap.set({ "n", "v", "i" }, "<C-S-" .. val .. ">", "<Esc><C-w><S-" .. val .. ">",
+		{ silent = true, noremap = true })
+	vim.keymap.set({ "t" }, "<C-S-" .. val .. ">", NMODE_TERM .. "<C-w><S-" .. val .. ">",
+		{ silent = true, noremap = true })
 end
 -- indentation
 vim.keymap.set({ "v" }, "<Tab>", ">gv", { silent = true, noremap = true })
 vim.keymap.set({ "v" }, "<S-Tab>", "<gv", { silent = true, noremap = true })
 -- Lex
-vim.keymap.set({ "n", "v", "i", "t" }, "<C-b>", function() vim.cmd(":Lex 20") end, { silent = true, noremap = true })
+-- vim.keymap.set({ "n", "v", "i", "t" }, "<C-b>", function() vim.cmd(":Lex 20") end, { silent = true, noremap = true })
+vim.keymap.set({ "n", "v", "i", "t" }, "<C-b>", function() vim.cmd(":e .") end, { silent = true, noremap = true })
 -- <F5>: runfile
 function RunFile(filepath)
 	if filepath == nil then filepath = vim.fn.substitute(vim.fn.expand("%:p"), "\\", "/", "g") end
