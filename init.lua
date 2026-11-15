@@ -2,8 +2,7 @@
 require("config.lazy")
 -- globals
 NMODE_TERM = "<C-\\><C-n>"
--- FONTNAME = "Iosevka Nerd Font Mono:h11"
-FONTNAME = "Lucida Console:h11"
+FONTNAME = "JetBrainsMono Nerd Font:h9"
 COLORTHEME = "slate"
 INTERPRETERS = {}
 INTERPRETERS["python"] = "python -i fname"

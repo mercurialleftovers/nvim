@@ -66,7 +66,7 @@ return {
 		config = function()
 			require("mason-lspconfig").setup {
 				-- ensure_installed = { "lua_ls", "pyright", "ruff", "clangd", "tinymist", "emmet_ls", "biome", "arduino_language_server", "harper_ls" },
-				ensure_installed = { "lua_ls", "pyright", "ruff", "clangd", "tinymist", "emmet_ls", "biome", "harper_ls" },
+				ensure_installed = { "lua_ls", "pyright", "ruff", "clangd", "tinymist", "emmet_ls", "biome", "harper_ls", "jinja_lsp" },
 			}
 			-- configuring lsp stuff
 			local lsp_grp = vim.api.nvim_create_augroup("LspGroup", { clear = true })
@@ -133,5 +133,5 @@ return {
 			}
 			treesitter.install { "typescript", "javascript", "css", "html" }
 		end
-	}
+	},
 }
