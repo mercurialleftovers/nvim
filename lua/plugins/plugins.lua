@@ -40,7 +40,7 @@ return {
 		},
 		config = function()
 			local builtin = require('telescope.builtin')
-			vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = 'Telescope find files' })
+			vim.keymap.set('n', '<C-p>', builtin.find_files, { desc = 'Telescope find files' })
 			vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = 'Telescope live grep' })
 			vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = 'Telescope help tags' })
 			vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = 'Telescope buffers' })
@@ -56,6 +56,7 @@ return {
 		end,
 	},
 	-- { "mason-org/mason.nvim", opts = {}, }, -- handled by dependencies
+
 	{
 		"mason-org/mason-lspconfig.nvim",
 		opts = {},
@@ -65,8 +66,7 @@ return {
 		},
 		config = function()
 			require("mason-lspconfig").setup {
-				-- ensure_installed = { "lua_ls", "pyright", "ruff", "clangd", "tinymist", "emmet_ls", "biome", "arduino_language_server", "harper_ls" },
-				ensure_installed = { "lua_ls", "pyright", "ruff", "clangd", "tinymist", "emmet_ls", "biome", "harper_ls", "jinja_lsp", "tailwindcss", },
+				ensure_installed = { "lua_ls", "pyright", "ruff", "clangd", "tinymist", "emmet_ls", "biome", "harper_ls", "jinja_lsp", "tailwindcss", "superhtml", },
 			}
 			-- configuring lsp stuff
 			local lsp_grp = vim.api.nvim_create_augroup("LspGroup", { clear = true })
@@ -110,6 +110,7 @@ return {
 				filetypes = { "typst, markdown, text, tex, html" } })
 		end
 	},
+	-- lazy def to identify lua globals by the lsp
 	{
 		"folke/lazydev.nvim",
 		ft = "lua", -- only load on lua files
@@ -121,6 +122,7 @@ return {
 			},
 		},
 	},
+
 	{
 		'nvim-treesitter/nvim-treesitter',
 		lazy = false,
@@ -134,12 +136,12 @@ return {
 			treesitter.install { "typescript", "javascript", "css", "html" }
 		end
 	},
-	{
-		"https://git.sr.ht/~whynothugo/lsp_lines.nvim",
-		config = function()
-			require("lsp_lines").setup()
-		end,
-	},
+	-- {
+	-- 	"https://git.sr.ht/~whynothugo/lsp_lines.nvim",
+	-- 	config = function()
+	-- 		require("lsp_lines").setup()
+	-- 	end,
+	-- },
 	{
 		"lukas-reineke/indent-blankline.nvim",
 		main = "ibl",
