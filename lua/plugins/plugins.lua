@@ -174,5 +174,14 @@ return {
 
 			require("ibl").setup { indent = { highlight = highlight } }
 		end
+	},
+	{
+
+		"dgrco/deepwater.nvim",
+		lazy = false,
+		priority = 1000,
+		config = function()
+			vim.cmd.colorscheme("deepwater")
+		end,
 	}
 }

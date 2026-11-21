@@ -11,7 +11,7 @@ INTERPRETERS["javascript"] = "node fname"
 INTERPRETERS["typescript"] = "node fname"
 TEMPDIR = vim.fs.joinpath(vim.fn.stdpath("data"), "tempstuff")
 UNDODIR = vim.fs.joinpath(TEMPDIR, "undodir")
-BUILD_SCRIPT = "build.bat" -- TODO(bader): add Nix support (build.sh)
+BUILD_SCRIPT = "build.bat" -- TODO(bader): add *nix support (build.sh)
 if vim.fn.isdirectory(UNDODIR) == 0 then vim.fn.mkdir(UNDODIR, "p") end
 -- settings
 vim.cmd("colorscheme " .. COLORTHEME)
@@ -161,4 +161,8 @@ vim.keymap.set("v", "<S-j>", ":m '>+1<CR>gv=gv", { silent = true, noremap = sile
 function godir() vim.cmd("tcd " .. vim.fn.stdpath("config")) end
 
 -- ctrl-bs
-vim.keymap.set("i", "<C-BS>", "<Esc>viwxi", { silent = true, noremap = true })
+vim.keymap.set("i", "<C-BS>", "<Esc>viwxa", { silent = true, noremap = true })
+-- ctrl-d (puny go at multicursor vscode-like ctrl-d)
+vim.keymap.set({ "i", "n" }, "<C-d>", "<Esc>viw")
+vim.keymap.set({ "v" }, "<C-d>", "*")
+-- vim.keymap.set({ "v" }, "<S-C-d>", "<S-*>")
