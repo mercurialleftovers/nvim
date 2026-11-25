@@ -166,3 +166,12 @@ vim.keymap.set("i", "<C-BS>", "<Esc>viwxa", { silent = true, noremap = true })
 vim.keymap.set({ "i", "n" }, "<C-d>", "<Esc>viw")
 vim.keymap.set({ "v" }, "<C-d>", "*")
 -- vim.keymap.set({ "v" }, "<S-C-d>", "<S-*>")
+-- TODO(bader): ask on gitub
+-- disabling autocomplete for prompt buffers like Telescope
+-- one of the experts (@g4lb) at github answered me with this
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = "TelescopePrompt",
+	callback = function(e)
+		vim.bo[e.buf].autocomplete = false
+	end,
+})

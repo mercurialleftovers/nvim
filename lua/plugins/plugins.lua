@@ -29,7 +29,7 @@ return {
 		end,
 	},
 	-- { 'nvim-mini/mini.pairs', version = '*', config = function() require("mini.pairs").setup({modes = {insert = true, command = true, terminal = true}), },
-	{ "https://github.com/m4xshen/autoclose.nvim", config = function() require("autoclose").setup() end },
+	{ "https://github.com/m4xshen/autoclose.nvim",      config = function() require("autoclose").setup() end },
 	{
 		'nvim-telescope/telescope.nvim',
 		version = '*',
@@ -183,5 +183,6 @@ return {
 		config = function()
 			vim.cmd.colorscheme("deepwater")
 		end,
-	}
+	},
+	{ "https://github.com/luisiacc/handmade-hero-theme" }
 }
