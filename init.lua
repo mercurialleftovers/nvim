@@ -3,12 +3,15 @@ require("config.lazy")
 -- globals
 NMODE_TERM = "<C-\\><C-n>"
 FONTNAME = "JetBrainsMono Nerd Font:h9"
-COLORTHEME = "slate"
+COLORTHEME = "delek"
+
 INTERPRETERS = {}
 INTERPRETERS["python"] = "python -i fname"
 INTERPRETERS["typst"] = "typst compile fname --open"
 INTERPRETERS["javascript"] = "node fname"
 INTERPRETERS["typescript"] = "node fname"
+-- INTERPRETERS["lua"] = ":'<,'>so" -- TODO(bader): well, the Runfile/RunChunk functions spawn a new terminal, so this won't work, you have to use as autocmd
+
 TEMPDIR = vim.fs.joinpath(vim.fn.stdpath("data"), "tempstuff")
 UNDODIR = vim.fs.joinpath(TEMPDIR, "undodir")
 BUILD_SCRIPT = "build.bat" -- TODO(bader): add *nix support (build.sh)
@@ -110,15 +113,19 @@ vim.keymap.set({ "v" }, "<S-Tab>", "<gv", { silent = true, noremap = true })
 -- vim.keymap.set({ "n", "v", "i", "t" }, "<C-b>", function() vim.cmd(":Lex 20") end, { silent = true, noremap = true })
 vim.keymap.set({ "n", "v", "i", "t" }, "<C-b>", function() vim.cmd(":e .") end, { silent = true, noremap = true })
 -- <F5>: runfile
-function RunFile(filepath)
+function RunFile(filepath, newTab)
 	if filepath == nil then filepath = vim.fn.substitute(vim.fn.expand("%:p"), "\\", "/", "g") end
 	local cmd = INTERPRETERS[vim.o.filetype]
 	if not cmd then return end
 	cmd = vim.fn.substitute(cmd, "fname", filepath, "g")
-	vim.cmd(":tabnew | term " .. cmd)
+	if newTab then
+		vim.cmd(":tabnew | term " .. cmd)
+	else
+		vim.cmd(":hor term " .. cmd)
+	end
 end
 
-vim.keymap.set({ "n", "v", "i" }, "<F5>", RunFile, { silent = true, noremap = true })
+vim.keymap.set({ "n", "v", "i" }, "<F5>", function() RunFile(nil, false) end, { silent = true, noremap = true })
 -- <S-F5>: runfile
 function RunBuildScript(build_script)
 	if build_script == nil then
@@ -140,7 +147,7 @@ function RunChunk()
 	local filepath = vim.fs.joinpath(TEMPDIR, "temp_file." .. vim.o.filetype)
 	vim.cmd("normal! \"cy")
 	vim.fn.writefile(vim.fn.getreg('c'), filepath)
-	RunFile(filepath)
+	RunFile(filepath, false) -- true for newTab
 end
 
 vim.keymap.set({ "v" }, "<S-Enter>", RunChunk, { silent = true, noremap = true })
@@ -148,7 +155,7 @@ vim.keymap.set({ "v" }, "<S-Enter>", RunChunk, { silent = true, noremap = true }
 function ChangeFontSize(size)
 	local nbr_pattern = '\\d\\+'
 	local current_size = tonumber(vim.fn.matchstr(vim.o.guifont, nbr_pattern))
-	if current_size == nil then return end
+	if current_size == nil then return end -- TODO(bader): figure out a way to get current font size without regexing for font_name(:h11)
 	vim.o.guifont = vim.fn.substitute(vim.o.guifont, nbr_pattern, current_size + size, "")
 end
 
@@ -160,6 +167,7 @@ vim.keymap.set("v", "<S-j>", ":m '>+1<CR>gv=gv", { silent = true, noremap = sile
 -- cd into the config dir
 function godir() vim.cmd("tcd " .. vim.fn.stdpath("config")) end
 
+vim.api.nvim_create_user_command("Dir", godir, { nargs = 0, range = false, bang = false })
 -- ctrl-bs
 vim.keymap.set("i", "<C-BS>", "<Esc>viwxa", { silent = true, noremap = true })
 -- ctrl-d (puny go at multicursor vscode-like ctrl-d)
@@ -175,3 +183,29 @@ vim.api.nvim_create_autocmd("FileType", {
 		vim.bo[e.buf].autocomplete = false
 	end,
 })
+-- DEBUG SECTION ---------------------------------
+-- print active lsp clients for the current buffer
+function view_lsp_clients()
+	local clients = vim.lsp.get_active_clients({ bufnr = 0 })
+	if #clients == 0 then
+		vim.notify("there are no LSPs running for this buffer.")
+	end
+	for _, client in pairs(clients) do
+		vim.print(client.name)
+	end
+end
+
+vim.api.nvim_create_user_command("ViewLsps", view_lsp_clients, { nargs = 0, range = false, bang = false })
+
+-- TODO(bader): debug this shit
+-- sourcing lua files instead of running them externally in a cmdline env like python or js
+vim.api.nvim_create_autocmd("FileType",
+	{
+		pattern = "lua",
+		callback = function()
+			vim.notify("a lua file was opened")
+			vim.keymap.set("v", "<F5>", ":'<,'>source")
+			vim.keymap.set("n", "<F5>", ":%source")
+		end,
+	}
+)

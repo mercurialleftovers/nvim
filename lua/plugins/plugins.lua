@@ -110,7 +110,7 @@ return {
 				filetypes = { "typst, markdown, text, tex, html" } })
 		end
 	},
-	-- lazy def to identify lua globals by the lsp
+	-- lazydev to identify lua globals by lua_ls
 	{
 		"folke/lazydev.nvim",
 		ft = "lua", -- only load on lua files
@@ -122,7 +122,6 @@ return {
 			},
 		},
 	},
-
 	{
 		'nvim-treesitter/nvim-treesitter',
 		lazy = false,
@@ -133,15 +132,10 @@ return {
 				-- Directory to install parsers and queries to (prepended to `runtimepath` to have priority)
 				install_dir = vim.fn.stdpath('data') .. '/site'
 			}
-			treesitter.install { "typescript", "javascript", "css", "html" }
+			treesitter.install { "typescript", "javascript", "css", "html", "typst" }
 		end
 	},
-	-- {
-	-- 	"https://git.sr.ht/~whynothugo/lsp_lines.nvim",
-	-- 	config = function()
-	-- 		require("lsp_lines").setup()
-	-- 	end,
-	-- },
+	-- indent-blankline should be activated just for html, it is chaotic to look at
 	{
 		"lukas-reineke/indent-blankline.nvim",
 		main = "ibl",
@@ -175,14 +169,16 @@ return {
 			require("ibl").setup { indent = { highlight = highlight } }
 		end
 	},
+	-- JonBlow-inspired theme
+	{ "dgrco/deepwater.nvim" },
+	-- Casey-Muratori-inspired theme
+	{ "https://github.com/luisiacc/handmade-hero-theme" },
+	-- otter for lsp completion in embedded languages (js inside html, snippets inside md etc)
 	{
-
-		"dgrco/deepwater.nvim",
-		lazy = false,
-		priority = 1000,
-		config = function()
-			vim.cmd.colorscheme("deepwater")
-		end,
-	},
-	{ "https://github.com/luisiacc/handmade-hero-theme" }
+		'jmbuhr/otter.nvim',
+		dependencies = {
+			'nvim-treesitter/nvim-treesitter',
+		},
+		opts = {},
+	}
 }
