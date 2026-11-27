@@ -3,7 +3,7 @@ require("config.lazy")
 -- globals
 NMODE_TERM = "<C-\\><C-n>"
 FONTNAME = "JetBrainsMono Nerd Font:h9"
-COLORTHEME = "delek"
+COLORTHEME = "retrobox"
 
 INTERPRETERS = {}
 INTERPRETERS["python"] = "python -i fname"
@@ -204,8 +204,8 @@ vim.api.nvim_create_autocmd("FileType",
 		pattern = "lua",
 		callback = function()
 			vim.notify("a lua file was opened")
-			vim.keymap.set("v", "<F5>", ":'<,'>source")
-			vim.keymap.set("n", "<F5>", ":%source")
+			vim.keymap.set("v", "<F5>", ":'<,'>source<Enter>")
+			vim.keymap.set("n", "<F5>", ":%source<Enter>")
 		end,
 	}
 )
